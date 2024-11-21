@@ -1,0 +1,13 @@
+<div class="main">
+  <div class="inner">
+    <div class="form__wrapper">
+      <h2 class="page-heading">プロトタイプ編集</h2>
+
+      <% if flash[:alert] %>
+        <p class="alert"><%= flash[:alert] %></p>
+      <% end %>
+
+      <%= render 'form', prototype: @prototype %>
+    </div>
+  </div>
+</div>

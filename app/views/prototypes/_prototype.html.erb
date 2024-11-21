@@ -1,0 +1,20 @@
+<div class="prototype">
+  <% if prototype.image.attached? %>
+    <%= link_to prototype_path(prototype) do %>
+      <%= image_tag url_for(prototype.image), alt: prototype.title %>
+    <% end %>
+    <%= link_to prototype.title, prototype_path(prototype) %> 
+  <% end %>
+
+  <h3 class="prototype__title">
+    <%= link_to prototype.title, prototype_path(prototype) %>
+  </h3>
+
+  <p class="prototype__catch-copy">
+    <%= prototype.catch_copy %>
+  </p>
+
+  <p class="prototype__user">
+    投稿者: <%= link_to prototype.user.name, user_path(prototype.user) %> <%# 投稿者名前のリンクの修正 %>
+  </p>
+</div>
