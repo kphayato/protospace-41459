@@ -21,5 +21,10 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  url: <%= ENV['DATABASE_URL'] %>  # 本番環境ではDATABASE_URL環境変数を使って接続
-  database: protospace_41459_production  # データベース名をprotospace_41459_productionに変更
+  encoding: unicode
+  database: protospace_41459_production
+  pool: 5
+  username: root
+  password: 
+  host: localhost
+  port: 5432  # 必要に応じてポート番号を指定
