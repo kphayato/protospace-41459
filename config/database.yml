@@ -21,10 +21,4 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  encoding: unicode
-  database: protospace_41459_production
-  pool: 5
-  username: admin
-  password:  # パスワードは設定しない
-  host: localhost
-  port: 5432
+  url: <%= ENV['DATABASE_URL'] %>
