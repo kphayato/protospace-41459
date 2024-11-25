@@ -67,7 +67,6 @@ end
 gem 'devise'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
-gem 'pg', '~> 1.1'
 
 group :production do
   gem 'pg'
