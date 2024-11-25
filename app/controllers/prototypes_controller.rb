@@ -52,4 +52,7 @@ class PrototypesController < ApplicationController
   # 未認証ユーザーはログインページにリダイレクト
   def move_to_index
     unless user_signed_in?
-      redirect_to
+      redirect_to new_user_session_path
+    end
+  end
+end
