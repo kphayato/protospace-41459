@@ -10,8 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_21_133010) do
-  create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2024_11_22_073907) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_133010) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb3", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,13 +36,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_133010) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb3", force: :cascade do |t|
+  create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "comments", charset: "utf8mb3", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.text "content"
     t.bigint "prototype_id", null: false
     t.bigint "user_id", null: false
@@ -49,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_133010) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "prototypes", charset: "utf8mb3", force: :cascade do |t|
+  create_table "prototypes", force: :cascade do |t|
     t.string "title"
     t.text "catch_copy"
     t.text "concept"
@@ -58,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_133010) do
     t.integer "user_id"
   end
 
-  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "name", default: "", null: false
