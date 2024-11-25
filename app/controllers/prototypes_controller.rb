@@ -1,5 +1,4 @@
 class PrototypesController < ApplicationController
-  # 未認証ユーザーをログインページにリダイレクトする処理を、必要なアクションにのみ適用
   before_action :move_to_index, except: [:index, :new, :create]
   before_action :set_prototype, only: [:edit, :update, :show, :destroy]
 
@@ -49,7 +48,14 @@ class PrototypesController < ApplicationController
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image)
   end
 
-  # 未認証ユーザーはログインページにリダイレクト
+  # 未認証ユーザーはインデックスページにリダイレクト
   def move_to_index
     unless user_signed_in?
-      redirect_to
+      redirect_to new_user_session_path, alert: 'ログインが必要です。'
+    end
+  end
+
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+end
