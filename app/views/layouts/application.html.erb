@@ -6,6 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- CSSファイルを事前に読み込む -->
+    <link rel="preload" href="<%= asset_path('application.css') %>" as="style">
+
     <!-- Importmapをhead内で読み込む -->
     <%= javascript_importmap_tags %>
 
