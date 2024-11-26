@@ -1,21 +1,24 @@
+# PrototypesController
 class PrototypesController < ApplicationController
-  # 未認証ユーザーをログインページにリダイレクトする処理を、必要なアクションにのみ適用
-  before_action :move_to_index, only: [:edit, :update, :destroy] # 編集、更新、削除のみログイン必須
+  # アクセス制限
+  before_action :move_to_index, only: [:edit, :update, :destroy]
   before_action :set_prototype, only: [:edit, :update, :show, :destroy]
   before_action :check_user_permission, only: [:edit, :update, :destroy]
 
+  # 一覧表示
   def index
     @prototypes = Prototype.all
   end
 
-  def show
-    @prototype = Prototype.find(params[:id])
-  end
+  # 詳細表示
+  def show; end
 
+  # 新規作成フォーム
   def new
     @prototype = Prototype.new
   end
 
+  # 新規作成処理
   def create
     @prototype = current_user.prototypes.build(prototype_params)
     if @prototype.save
@@ -25,10 +28,10 @@ class PrototypesController < ApplicationController
     end
   end
 
-  def edit
-    # 編集ページ
-  end
+  # 編集フォーム
+  def edit; end
 
+  # 更新処理
   def update
     if @prototype.update(prototype_params)
       redirect_to @prototype, notice: 'プロトタイプが更新されました。'
@@ -37,6 +40,7 @@ class PrototypesController < ApplicationController
     end
   end
 
+  # 削除処理
   def destroy
     @prototype.destroy
     redirect_to prototypes_path, notice: 'プロトタイプが削除されました。'
@@ -44,26 +48,24 @@ class PrototypesController < ApplicationController
 
   private
 
+  # Strong Parameters
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image)
   end
 
-  # ログイン状態に関わらず、`index` アクションにはアクセス可能
+  # ログインユーザーのみ編集・削除可能
   def move_to_index
-    # 編集、更新、削除はログイン必須
-    unless user_signed_in?
-      redirect_to root_path, alert: 'ログインが必要です。' # ログインしていない場合、トップページにリダイレクト
-    end
+    redirect_to root_path, alert: 'ログインが必要です。' unless user_signed_in?
   end
 
+  # プロトタイプの取得
   def set_prototype
-    @prototype = Prototype.find(params[:id])
+    @prototype = Prototype.find_by(id: params[:id])
+    redirect_to root_path, alert: '該当するプロトタイプが見つかりません。' unless @prototype
   end
 
-  # 編集や削除操作で他ユーザーのプロトタイプにアクセスできないようにする
+  # 他のユーザーのプロトタイプへの編集・削除を禁止
   def check_user_permission
-    unless @prototype.user == current_user
-      redirect_to root_path, alert: '他のユーザーのプロトタイプにはアクセスできません。'
-    end
+    redirect_to root_path, alert: '他のユーザーのプロトタイプにはアクセスできません。' unless @prototype.user == current_user
   end
 end

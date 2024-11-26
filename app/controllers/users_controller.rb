@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :ensure_current_user, only: [:show] # 現在ログインしているユーザーのみアクセス可能
+  before_action :authenticate_user! # ログインしていないユーザーをブロック
+  before_action :correct_user, only: [:show]
 
   def show
     @user = User.find(params[:id])
@@ -8,10 +8,11 @@ class UsersController < ApplicationController
 
   private
 
-  # 他のユーザーの詳細ページにアクセスできないようにする
-  def ensure_current_user
-    if current_user.id != params[:id].to_i
-      redirect_to root_path, alert: '他のユーザーの詳細ページにはアクセスできません。'
+  def correct_user
+    # 現在ログイン中のユーザーと一致するか確認
+    unless current_user.id == params[:id].to_i
+      flash[:alert] = "他のユーザーのページにはアクセスできません。"
+      redirect_to root_path # アクセス拒否時のリダイレクト先
     end
   end
 end
