@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @prototypes = @user.prototypes.includes(image_attachment: :blob) # ユーザーの投稿を取得
   end
 
   private
