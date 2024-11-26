@@ -1,20 +1,26 @@
 <div class="prototype">
   <% if prototype.image.attached? %>
+    <!-- 画像リンクとタイトルリンクを1つのリンク内にまとめる -->
     <%= link_to prototype_path(prototype) do %>
-      <%= image_tag url_for(prototype.image), alt: prototype.title %>
+      <div class="card__image">
+        <%= image_tag url_for(prototype.image), alt: prototype.title %>
+      </div>
+      <h3 class="prototype__title">
+        <%= prototype.title %>
+      </h3>
     <% end %>
-    <%= link_to prototype.title, prototype_path(prototype) %> 
+  <% else %>
+    <!-- 画像が添付されていない場合でもタイトルだけ表示 -->
+    <h3 class="prototype__title">
+      <%= link_to prototype.title, prototype_path(prototype) %>
+    </h3>
   <% end %>
-
-  <h3 class="prototype__title">
-    <%= link_to prototype.title, prototype_path(prototype) %>
-  </h3>
 
   <p class="prototype__catch-copy">
     <%= prototype.catch_copy %>
   </p>
 
   <p class="prototype__user">
-    投稿者: <%= link_to prototype.user.name, user_path(prototype.user) %> <%# 投稿者名前のリンクの修正 %>
+    投稿者: <%= link_to prototype.user.name, user_path(prototype.user) %> 
   </p>
 </div>

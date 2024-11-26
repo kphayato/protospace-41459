@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
+  # 全アクションでログインを要求するが、`index` と `show` アクションだけは除外
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
